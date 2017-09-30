@@ -3,18 +3,24 @@ from skimage import transform, morphology
 import numpy as np
 import get_pic_rotated_and_broaden
 import matplotlib.pyplot as plt
+import get_images
 
 
-def correct(image):
+def correct_angle_by_radon(image):
+    """
+    Description: use the method of radon transformation to straighten the image.
+    :param image: src
+    :return: img_rotated and rotating_angle
+    """
     img = cv2.imread(image)
-    channel_num = img.shape[2]
+
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     bw = cv2.Canny(img_gray, 60, 120)
     for i in bw:
         for j in range(len(i)):
             if 255 == i[j]:
                 i[j] = 1
-    bw = morphology.skeletonize(bw)
+    # bw = morphology.skeletonize(bw)   # optional
     theta = list(range(-90, 90))
     R = transform.radon_transform.radon(bw, theta)
     R1 = np.max(R, axis=0)
@@ -25,9 +31,12 @@ def correct(image):
         theta_max -= 91
     img_rotated = get_pic_rotated_and_broaden.get_pic_rotated_and_broaden(img, -theta_max, (255, 255, 255))
     rotating_angle = theta_max
-    for i in img_rotated:
-        for j in range(len(i)):
-            if [i[j][0], i[j][1], i[j][2]] == [0, 0, 0]:
-                i[j] = [255, 255, 255]
 
     return img_rotated, rotating_angle
+
+images = get_images.get_images(r'./images/')
+for image in images:
+    img_rotated, correcting_angle = correct_angle_by_radon(image)
+    print('correcting_angle:', correcting_angle)
+    plt.imshow(cv2.cvtColor(img_rotated, cv2.COLOR_BGR2RGB))
+    plt.show()
