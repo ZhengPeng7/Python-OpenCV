@@ -34,9 +34,10 @@ def correct_angle_by_radon(image):
 
     return img_rotated, rotating_angle
 
-images = get_images.get_images(r'./images/')
-for image in images:
-    img_rotated, correcting_angle = correct_angle_by_radon(image)
-    print('correcting_angle:', correcting_angle)
-    plt.imshow(cv2.cvtColor(img_rotated, cv2.COLOR_BGR2RGB))
-    plt.show()
+# test:
+# images = get_images.get_images(r'./images/')
+# for image in images:
+#     img_rotated, correcting_angle = correct_angle_by_radon(image)
+#     print('correcting_angle:', correcting_angle)
+#     plt.imshow(cv2.cvtColor(img_rotated, cv2.COLOR_BGR2RGB))
+#     plt.show()
