@@ -20,7 +20,7 @@ if __name__ == '__main__':
     connectivity = 4
 
 
-    def update(dummy=None):
+    def update(dummy=None, filler_color=(255, 255, 255)):
         if seed_pt is None:
             cv2.imshow('floodfill', img)
             return
@@ -32,10 +32,10 @@ if __name__ == '__main__':
         if fixed_range:
             flags |= cv2.FLOODFILL_FIXED_RANGE  # 考虑当前象素与种子象素之间的差（高比特也可以为0）
         # 以白色进行漫水填充
-        cv2.floodFill(flooded, mask, seed_pt, (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)),
+        cv2.floodFill(flooded, mask, seed_pt, filler_color,
                       (lo,) * 3, (hi,) * 3, flags)
 
-        cv2.circle(flooded, seed_pt, 2, (0, 0, 255), -1)  # 选定基准点用红色圆点标出
+        cv2.circle(flooded, seed_pt, 2, (255, 255, 255), -1)  # 选定基准点用白色圆点标出
         cv2.imshow('floodfill', flooded)
 
 
