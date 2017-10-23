@@ -10,7 +10,6 @@ counter = -1
 while cap.isOpened():
     counter += 1
     start_time_extract_figure = time.time()
-    # your code
     # extract your figure
     _, frame = cap.read()
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -29,7 +28,6 @@ while cap.isOpened():
 
     # extract the background
     start_time_combination = time.time()
-    # your code
     ret, background = background_capture.read()
     background = cv2.resize(background, (640, 480), interpolation=cv2.INTER_AREA)
     # maybe the default size of embedded camera is 640x480
